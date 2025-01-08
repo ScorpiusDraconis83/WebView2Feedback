@@ -1,8 +1,9 @@
-name: Sync ADO Issue
+name: Run test action
 
 on:
-  issues:
-    types: [labeled, closed, reopened]
+  workflow_dispatch
+  # issues:
+  #  types: [labeled, closed, reopened]
 
 permissions:
   id-token: write
@@ -24,7 +25,7 @@ jobs:
       env:
         github_token: "${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}"
       with:
-        label: 'tracked'
+        label: 'test'
         ado_organization: 'microsoft'
         ado_project: 'Edge'
         ado_area_path: 'Edge\Web Experience\WebView2'
