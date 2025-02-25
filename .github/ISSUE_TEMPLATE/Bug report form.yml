@@ -25,6 +25,7 @@ body:
        - Blocking. My app's basic functions are not working due to this issue.
        - Important. My app's user experience is significantly compromised.
        - Moderate. My app's user experience is affected, but still usable.
+       - Low. My app is not very affected, or this only affects development.
   validations:
       required: true
 - id: runtime-channel
@@ -106,12 +107,11 @@ body:
 - id: repro-in-edge
   type: dropdown
   attributes:
-    description: Is this issue reproducible in the Edge or Chrome browsers?
+    description: Does this issue reporduce in the Edge or Chrome browsers?
     label: Repros in Edge Browser
     options:
-    - 'No'
-    - 'Yes'
-    - Not Applicable
+    - 'No, issue does not reproduce in the corresponding Edge version'
+    - 'Yes, issue can be reproduced in the corresponding Edge version'
   validations:
     required: true
 - id: regression

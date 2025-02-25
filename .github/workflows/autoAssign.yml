@@ -5,14 +5,18 @@ on:
 jobs:
   run:
     runs-on: ubuntu-latest
+
+    permissions:
+      issues: write
+    
     steps:
       - uses: wow-actions/auto-assign@v3
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          assignees: vbryh-msft, lflores-ms
+          assignees: ambikakunnath
           includeLabels: regression
       - uses: wow-actions/auto-assign@v3
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          assignees: vbryh-msft, lflores-ms
+          assignees: ambikakunnath
           includeLabels: bluescreen

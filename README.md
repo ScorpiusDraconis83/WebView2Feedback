@@ -29,5 +29,14 @@ This is a place for all developers of the [Microsoft Edge WebView2](https://aka.
     2. If the feature is not already requested, [open a new issue](https://github.com/MicrosoftEdge/WebView2Feedback/issues/new/choose).
 1. Tracked issues will be labeled with the `tracked` label. If you see this label, we are aware of the issue and tracking it on our internal backlog.
 
+
+### What do the labels on the issues mean?
+
+- `tracked` We have acknowledged the issue and are tracking it on our internal backlog. We will consider and investigate them in the near future.
+    - For bugs, it means we think this is an actual product issue.
+    - For feature requests, it means we consider it to be a valid request.
+- `regression` A behavior that used to work in a previous version of WebView2, but no longer works as expected. We will prioritize this issue higher.
+- `priority-low` We have considered this issue and decided that we will not be able to address it in the near future. Developers are welcomed to provide justifications on this issue for us to revisit the prioritization.
+
 ## Code of Conduct
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
