@@ -4,6 +4,7 @@ on:
     types: [opened, edited]
 
 permissions:
+  id-token: write
   issues: write
   contents: read
 
@@ -27,3 +28,40 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         assignees: ambikakunnath
         includeLabels: regression
+
+    # Check if the issue now has the regression label (added by labeler above)
+    - name: Check for regression label
+      id: check_regression
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const labels = await github.rest.issues.listLabelsOnIssue({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: context.issue.number
+          });
+          const hasRegression = labels.data.some(l => l.name === 'regression');
+          core.setOutput('has_regression', hasRegression.toString());
+
+    # Sync regression issues to ADO directly (syncAdo.yml won't trigger from workflow-added labels)
+    - name: Azure login
+      if: steps.check_regression.outputs.has_regression == 'true'
+      uses: azure/login@v2
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: Sync regression to ADO
+      if: steps.check_regression.outputs.has_regression == 'true'
+      uses: Navdeep-ss/github-actions-issue-to-work-item@simple-sync-azurecli
+      env:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        label: 'regression'
+        ado_organization: 'microsoft'
+        ado_project: 'Edge'
+        ado_area_path: 'Edge\Web Experience\WebView2'
+        ado_tags: 'WV2SupportAutoFile'
+        ado_gh_closed_tag: 'WV2_GitHub_Closed'
+        update_issue_body: 'false'
